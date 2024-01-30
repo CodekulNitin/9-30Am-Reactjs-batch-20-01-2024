@@ -1,62 +1,45 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Modal from "@mui/material/Modal";
+import { Button, TextField } from "@mui/material";
+import React, { useState } from "react";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
-export default function LoginPage(props) {
-    const[firstName,setFirstName]=React.useState("")
-    const [tableData,setTableData]=React.useState([])
-    function onSubmit (){
-      let  tempArr = [...tableData]
-        let obj={
-            firstName:firstName
-        }
-        tempArr.push(obj)
-        setTableData(tempArr)
+function LoginPage({ setLoginInfo, loginInfo }) {
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const handleLogin = () => {
+    if (loginInfo !== null) {
+      const loginObj = {
+        userName: userName,
+        userPassword: password,
+      };
+      setLoginInfo(loginObj);
+      setUserName("");
+      setPassword("");
+    } else {
+      alert("Please Fill User Name And Password");
     }
+  };
   return (
-    <div>
-      <Modal
-        open={props.open}
-        onClose={props.handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <button
-            type="button"
-            onClick={() => {
-              props.handleClose();
-            }}
-          >
-            Close
-          </button>
-          <input type="text" name="firstName" onChange={(e)=>{
-            setFirstName(e.target.value)
-          }} />
-          <button type="button" onClick={onSubmit}>
-Save
-          </button>
-          <h2>{tableData.map((name)=>{
-            return(
-                <>
-                {name?.firstName}
-                </>
-            )
-          })}</h2>
-        </Box>
-      </Modal>
+    <div className="grid justify-center gap-2 mt-16">
+      <TextField
+        name="userName"
+        label="User Name"
+        size="small"
+        defaultValue={userName}
+        onChange={(e) => {setUserName(e.target.value)
+        console.log("userName",e.target.value);
+        }}
+      />
+      <TextField
+        name="password"
+        label="Password"
+        size="small"
+        defaultValue={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <Button type="button" variant="contained" onClick={handleLogin}>
+        Login
+      </Button>
     </div>
   );
 }
+
+export default LoginPage;

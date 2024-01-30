@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import LoginPage from "../loginpage/LoginPage";
 
-function Navbar() {
+function Navbar({userData,productData}) {
   const [openLoginModal, setOpenLoginModal] = useState(false); //
   const handleCloseLoginModal = () => setOpenLoginModal(false);
+
+  // console.log("props",props);
 
   return (
     <>
@@ -31,6 +33,10 @@ function Navbar() {
           >
             Log In
           </button>
+          <a>
+            {userData?.userName}
+            {productData.productName}
+          </a>
         </ul>
       </nav>
       <LoginPage open={openLoginModal} handleClose={handleCloseLoginModal} />
