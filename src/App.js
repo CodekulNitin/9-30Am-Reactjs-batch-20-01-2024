@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import About from "./components/routing/About";
 import LoginForm from "./components/routing/LoginForm";
 import Gallary from "./components/routing/Gallary";
+import ItemCreationList from "./components/basicmodalex/ItemCreationList";
 
 function App() {
   const [loginInfo, setLoginInfo] = useState(null);
@@ -23,7 +24,7 @@ function App() {
 
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/about" element={<ItemCreationList />} />
           <Route path="/loginform" element={<LoginForm />} />
           <Route path="/gallary" element={<Gallary />} />
         </Routes>

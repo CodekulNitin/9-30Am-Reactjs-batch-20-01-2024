@@ -18,7 +18,7 @@ function HomePage({loginInfo}) {
     <div className="pt-20">
       <h1>UserName: {loginInfo.userName}</h1>
       {getPostsData.map((list) => {
-        return <h1 className="border p-1 rounded">{list.title}</h1>;
+        return <h1 className="border p-1 rounded ">{list.title}</h1>;
       })}
     </div>
   );

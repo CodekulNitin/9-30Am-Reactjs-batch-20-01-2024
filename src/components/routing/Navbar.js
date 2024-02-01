@@ -13,7 +13,7 @@ function Navbar() {
         </ul>
         <ul className="flex space-x-3 items-center">
           <li>
-            <Link to="/masters/about">About</Link>
+            <Link to="/about">About</Link>
           </li>
           <li>
             <Link to="/loginform">LoginForm</Link>
