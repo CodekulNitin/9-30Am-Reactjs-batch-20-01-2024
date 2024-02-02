@@ -23,14 +23,17 @@ export default function ItemCreationModal(props) {
 
   function handlSubmit() {
     let tempArr = [...props.tableData];
+    let filteredArr = tempArr.filter(
+      (list) => list["Item Code"] === props.selectedEditRow?.["Item Code"]
+    ); // 
 
+    console.log("filteredArr", filteredArr);
     let tempObj = {
       "Item Name": itemName,
       "Item Code": itemCode,
       Active: activeCheckbox,
     };
-    console.log("tempObj", tempObj);
-    if (itemName !== "" || itemCode !== "") {
+    if (itemName !== "" && itemCode !== "") {
       tempArr.push(tempObj);
       props.setTableData(tempArr);
       setItemName("");
@@ -39,6 +42,15 @@ export default function ItemCreationModal(props) {
       props.handleClose();
     }
   }
+  React.useEffect(() => {
+    if (props.selectedEditRow) {
+      setItemName(props.selectedEditRow["Item Name"]);
+      setItemCode(props.selectedEditRow["Item Code"]);
+      setActiveCheckbox(props.selectedEditRow.Active);
+    }
+  }, [props.selectedEditRow]);
+
+  console.log("selectedRow", props.selectedEditRow, itemCode);
 
   return (
     <div>
@@ -52,7 +64,13 @@ export default function ItemCreationModal(props) {
             <h1 className="font-semibold text-lg">Item Creation Modal</h1>
             <button
               className="text-red-600 border border-red-600 px-2 rounded font-semibold"
-              onClick={props.handleClose}
+              onClick={() => {
+                props.handleClose();
+                props.setSelectedEditRow(null);
+                setItemName("");
+                setItemCode("");
+                setActiveCheckbox(true);
+              }}
             >
               X
             </button>
@@ -62,20 +80,20 @@ export default function ItemCreationModal(props) {
               size="small"
               label="Item Name"
               name="itemName"
-              defaultValue={itemName}
+              value={itemName}
               onChange={(e) => setItemName(e.target.value)}
             />
             <TextField
               size="small"
               label="Item Code"
               name="itemCode"
-              defaultValue={itemCode}
+              value={itemCode}
               onChange={(e) => setItemCode(e.target.value)}
             />
             <FormControlLabel
               control={
                 <Checkbox
-                  defaultChecked={activeCheckbox}
+                  checked={activeCheckbox}
                   onChange={(e) => setActiveCheckbox(e.target.checked)}
                 />
               }
@@ -88,7 +106,7 @@ export default function ItemCreationModal(props) {
               className="bg-green-600 rounded px-3 text-white h-9"
               onClick={handlSubmit}
             >
-              Save
+              {props.selectedEditRow !== null ? "Update" : "Save"}
             </button>
           </div>
         </Box>
