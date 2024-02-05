@@ -2,6 +2,8 @@ import { Checkbox, FormControlLabel, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
+import { useEffect } from "react";
+import { useRef, useState } from "react";
 
 const style = {
   position: "absolute",
@@ -15,9 +17,10 @@ const style = {
 };
 
 export default function ItemCreationModal(props) {
-  const [itemName, setItemName] = React.useState("");
-  const [itemCode, setItemCode] = React.useState("");
-  const [activeCheckbox, setActiveCheckbox] = React.useState(true);
+  const [itemName, setItemName] = useState("");
+  const [itemCode, setItemCode] = useState("");
+  const [activeCheckbox, setActiveCheckbox] = useState(true);
+  const useRef1 = useRef("");
 
   console.log("itemCreationData", itemName, itemCode, activeCheckbox);
 
@@ -25,7 +28,7 @@ export default function ItemCreationModal(props) {
     let tempArr = [...props.tableData];
     let filteredArr = tempArr.filter(
       (list) => list["Item Code"] === props.selectedEditRow?.["Item Code"]
-    ); // 
+    ); //
 
     console.log("filteredArr", filteredArr);
     let tempObj = {
@@ -49,6 +52,10 @@ export default function ItemCreationModal(props) {
       setActiveCheckbox(props.selectedEditRow.Active);
     }
   }, [props.selectedEditRow]);
+
+  useEffect(() => {
+    useRef1.current.focus();
+  }, []);
 
   console.log("selectedRow", props.selectedEditRow, itemCode);
 
@@ -76,13 +83,17 @@ export default function ItemCreationModal(props) {
             </button>
           </div>
           <div className="flex space-x-2 items-center pt-2">
-            <TextField
-              size="small"
-              label="Item Name"
-              name="itemName"
-              value={itemName}
-              onChange={(e) => setItemName(e.target.value)}
-            />
+            <fieldset ref={useRef1}>
+              <TextField
+                size="small"
+                type="text"
+                label="Item Name"
+                name="itemName"
+                value={itemName}
+                autoFocus={useRef1 !== "" ? true : false}
+                onChange={(e) => setItemName(e.target.value)}
+              />
+            </fieldset>
             <TextField
               size="small"
               label="Item Code"

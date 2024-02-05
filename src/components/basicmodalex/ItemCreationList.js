@@ -72,7 +72,7 @@ function ItemCreationList() {
                         }}
                       >
                         Edit
-                      </button>{" "}
+                      </button>
                       &nbsp;
                       <button>Delete</button>
                     </TableCell>
@@ -100,7 +100,7 @@ function ItemCreationList() {
           <h1 className="my-28 text-gray-600">No Records Found...</h1>
         )}
       </div>
-      {ItemCreationModal ? (
+      {ItemCreationModal && (
         <ItemCreationModal
           open={openItemCreationModal}
           handleClose={handleCloseItemCreationModal}
@@ -109,7 +109,7 @@ function ItemCreationList() {
           selectedEditRow={selectedEditRow}
           setSelectedEditRow={setSelectedEditRow}
         />
-      ) : null}
+      )}
     </div>
   );
 }
