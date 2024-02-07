@@ -8,6 +8,7 @@ import LoginForm from "./components/routing/LoginForm";
 import Gallary from "./components/routing/Gallary";
 import ItemCreationList from "./components/basicmodalex/ItemCreationList";
 import UseRefHook from "./components/hooks/UseRefHook";
+import ReactHookForm from "./components/hooks/ReactHookForm";
 
 function App() {
   const [loginInfo, setLoginInfo] = useState(null);
@@ -23,6 +24,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <UseRefHook />
+        <ReactHookForm />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<ItemCreationList />} />
