@@ -1,9 +1,10 @@
-import { Checkbox, FormControlLabel, TextField } from "@mui/material";
+import { Checkbox, FormControlLabel } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
-import { useEffect } from "react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import InputField from "../common/formfiled/InputField";
 
 const style = {
   position: "absolute",
@@ -17,11 +18,18 @@ const style = {
 };
 
 export default function ItemCreationModal(props) {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    control,
+    formState: { errors },
+  } = useForm();
   const [itemName, setItemName] = useState("");
   const [itemCode, setItemCode] = useState("");
   const [activeCheckbox, setActiveCheckbox] = useState(true);
   const useRef1 = useRef("");
-
+  const useRef2 = useRef("");
   console.log("itemCreationData", itemName, itemCode, activeCheckbox);
 
   function handlSubmit() {
@@ -45,6 +53,7 @@ export default function ItemCreationModal(props) {
       props.handleClose();
     }
   }
+
   React.useEffect(() => {
     if (props.selectedEditRow) {
       setItemName(props.selectedEditRow["Item Name"]);
@@ -54,7 +63,9 @@ export default function ItemCreationModal(props) {
   }, [props.selectedEditRow]);
 
   useEffect(() => {
-    useRef1.current.focus();
+    if (useRef1.current) {
+      useRef1.current.focus();
+    }
   }, []);
 
   console.log("selectedRow", props.selectedEditRow, itemCode);
@@ -83,24 +94,29 @@ export default function ItemCreationModal(props) {
             </button>
           </div>
           <div className="flex space-x-2 items-center pt-2">
-            <fieldset ref={useRef1}>
-              <TextField
-                size="small"
-                type="text"
-                label="Item Name"
-                name="itemName"
-                value={itemName}
-                autoFocus={useRef1 !== "" ? true : false}
-                onChange={(e) => setItemName(e.target.value)}
-              />
-            </fieldset>
-            <TextField
+            <InputField
+              control={control}
               size="small"
+              type="text"
+              label="Item Name"
+              name="itemName"
+              value={itemName}
+              inputRef={useRef1}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  useRef2.current.focus();
+                }
+              }}
+            />
+            <InputField
+              control={control}
+              size="small"
+              type="text"
               label="Item Code"
               name="itemCode"
-              value={itemCode}
-              onChange={(e) => setItemCode(e.target.value)}
+              inputRef={useRef2}
             />
+
             <FormControlLabel
               control={
                 <Checkbox

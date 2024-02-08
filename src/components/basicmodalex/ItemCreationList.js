@@ -100,7 +100,7 @@ function ItemCreationList() {
           <h1 className="my-28 text-gray-600">No Records Found...</h1>
         )}
       </div>
-      {ItemCreationModal && (
+      {openItemCreationModal && (
         <ItemCreationModal
           open={openItemCreationModal}
           handleClose={handleCloseItemCreationModal}

@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import CommonButton from "../common/button/CommonButton";
 import InputField from "../common/formfiled/InputField";
+import { useEffect } from "react";
 
 function ReactHookForm() {
   const {
@@ -38,19 +39,21 @@ function ReactHookForm() {
       >
         <InputField
           label="First Name"
-          ref={useRef1}
           name="firstName"
           control={control}
           defaultValue={""}
+          inputRef={useRef1}
           onKeyDown={handleKeyPress}
         />
+
         <InputField
           label="Mobile Number"
-          ref={useRef2}
+          inputRef={useRef2}
           name="mobileNumber"
           control={control}
           defaultValue={"123456"}
         />
+
         <CommonButton
           type="submit"
           className="bg-green-600 text-white"
